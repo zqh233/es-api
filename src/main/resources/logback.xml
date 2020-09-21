@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <property name="patt" value="%d{yyyMMdd HH:mm:ss.SSS} [%-1thread] [%-5level] %logger - %msg%n"/>
+    <property name="trackPatt" value="%d{yyyMMdd HH:mm:ss.SSS} - %msg%n"/>
+    <appender name="fileLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>./esApiApplication.log</file>
+        <encoder>
+            <pattern>${patt}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${logPath}/cloudfilm_%d{yyyyMMdd}_%i.zip</fileNamePattern>
+            <!-- each file should be at most 50MB -->
+            <maxFileSize>50MB</maxFileSize>
+            <!-- keep 30 days worth of history -->
+            <maxHistory>30</maxHistory>
+            <!--  keep files at most 300MB -->
+            <totalSizeCap>300MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender name="std" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${patt}</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <!-- 控制台输出 -->
+        <appender-ref ref="std"/>
+        <appender-ref ref="fileLog"/>
+    </root>
+</configuration>
